@@ -1,0 +1,30 @@
+{% load static from staticfiles  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+    <style>
+        html, body, div{
+          height: 100%;
+        }
+    </style>
+</head>
+
+<body style="background-image:url({% static 'img/login.jpg' %});background-repeat: no-repeat;background-size: 100%">
+    <div class="container valign-wrapper white-text" style="text-align: center !important;">
+        <h4 class="center-block">Thank you for spending time with our <a href="{% url 'login' %}" class="indigo-text text-accent-4">site</a></h4>
+    </div>
+
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script>
+        M.AutoInit();
+    </script>
+</body>
+</html>
