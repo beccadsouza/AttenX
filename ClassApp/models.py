@@ -15,3 +15,11 @@ class ClassAttention(models.Model):
     def __str__(self):
         return self.ov_attn
 
+
+class ClassAttendance(models.Model):
+    time_stamp = models.CharField(max_length=500)
+    class_id = models.CharField(max_length=1000)
+    student_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.student_name
