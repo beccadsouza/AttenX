@@ -44,16 +44,6 @@
         <script type="text/javascript" src="{% static 'js/capture.js' %}"></script>
         <script>
             M.AutoInit();
-            $(document).ready(function(){
-                $(".rotate").click(function(){
-                    $("#one").toggleClass("down") ;
-                    $('ul.tabs').tabs({
-                        swipeable : true,
-                        responsiveThreshold : 1920
-                    });
-                })
-            });
-
         </script>
     </body>
 </html>

@@ -28,7 +28,8 @@
       video.play();
     })
     .catch(function(err) {
-      console.log("An error occurred: " + err);
+      console.log('hakunamatata');
+      alert("Video won't stream without webcam permission.")
     });
 
     video.addEventListener('canplay', function(ev){
@@ -102,4 +103,5 @@
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
+  var x = 1219212;
 })();
