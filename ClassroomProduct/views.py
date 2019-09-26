@@ -7,7 +7,7 @@ from PIL import Image
 import numpy as np
 import json
 import time
-
+from qr_code.qrcode.utils import QRCodeOptions
 
 @login_required
 def dashboard(request):
@@ -16,6 +16,11 @@ def dashboard(request):
 
 def signout(request):
     return render(request, 'registration/logout.html')
+
+
+def qrcode(request):
+    context = dict(key="rebecca", my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
+    return render(request, 'home.html', context=context)
 
 
 @csrf_exempt
