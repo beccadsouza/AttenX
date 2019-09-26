@@ -9,9 +9,14 @@ import json
 import time
 from qr_code.qrcode.utils import QRCodeOptions
 
+
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+def home(request):
+    return render(request, 'home.html')
 
 
 def signout(request):
@@ -20,7 +25,7 @@ def signout(request):
 
 def qrcode(request):
     context = dict(key="rebecca", my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
-    return render(request, 'home.html', context=context)
+    return render(request, 'qr_code.html', context=context)
 
 
 @csrf_exempt

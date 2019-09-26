@@ -1,10 +1,80 @@
+{% load static from staticfiles  %}
 <!DOCTYPE html>
-{% load qr_code %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-    {% qr_from_text key options=my_options %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+        <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    </head>
+    
+<body style="background-color: rgba(139,128,141,0.9)">
+    <div style="margin-top: 20px">
+        <a href="{% url 'logout' %}" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:40px;margin-top: 15px">Log Out</a>
+        <a href="#" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:30px;margin-top: 15px">Terms & Conditions</a>
+    </div>
+    <br><br><br><br>
+    <div class="container-fluid" style="margin:30px">
+        <div class="row">
+            <div class="col m4">
+                <div class="card medium hoverable">
+                    <div class="card-image" style="height: 200px">
+                        <img src="{% static 'img/attention3.jpg' %}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Attention Detection</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col m4">
+                <div class="card medium hoverable">
+                    <div class="card-image" style="height: 200px">
+                        <img src="{% static 'img/attendance.jpg' %}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Attendance Tracking</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col m4">
+                <div class="card medium hoverable">
+                    <div class="card-image" style="height: 200px">
+                        <img src="{% static 'img/insights.jpg' %}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Insights & Analytics</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#">This is a link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script>
+        M.AutoInit();
+    </script>
 </body>
 </html>

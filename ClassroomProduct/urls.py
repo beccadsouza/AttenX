@@ -11,6 +11,7 @@ urlpatterns = [
 	url(r'accounts/', include('django.contrib.auth.urls')),
 	url(r'^signout/', views.signout, name='signout'),
 	url(r'^dashboard/', views.dashboard, name='dashboard'),
+	url(r'^home/', views.home, name='home'),
 	url(r'^capture/', views.capture, name='capture'),
 	url(r'^qrcodegen/', views.qrcode, name='qrcodegen'),
 	url(r'^', RedirectView.as_view(pattern_name='dashboard', permanent=False)),
