@@ -218,8 +218,11 @@ def getPoseAttention(image1):
 
     rules = []
     attn = 0
+    n_q=0
+    n_b=0
+    n_p=0
     for person_data in personwise_data:
         multiplication_factor = 1  # inferred from rules
         attn += multiplication_factor
 
-    return attn/len(personwise_data)*100
+    return (attn/len(personwise_data)*100,n_q,n_b,n_p)
