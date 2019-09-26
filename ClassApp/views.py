@@ -1,11 +1,15 @@
 from django.shortcuts import render
+from .pose_detect import getPoseAttention
+from .gaze_detect import getGazeAttention
 
 # Create your views here.
 def MakeAttention(request):
     frames=[] # list of frames each being a numpy array image
 
     # Eye gaze
-    # Pose
+    gaze_attn = getGazeAttention(frames[0])
+    pose_attn = getPoseAttention(frames[0])
+
     # Sleepy
     # Add to DB
 
