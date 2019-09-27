@@ -18,17 +18,17 @@ class ClassAttention(models.Model):
         return self.ov_attn
 
 
-class ClassAttentionSession(models.Model):
+class ClassAttentionID(models.Model):
     hash_key = models.CharField(max_length=100)
     session_teacher = models.CharField(max_length=100)
     time_stamp = models.DateField(auto_now_add=True)
-    class_id = models.DateTimeField(auto_now_add=True)
+    class_id = models.CharField(max_length=100)
 
 
 class ClassAttendance(models.Model):
     hash_key = models.CharField(max_length=100)
     time_stamp = models.DateTimeField(auto_now_add=True)
-    class_id = models.CharField(max_length=1000)
+    class_id = models.CharField(max_length=100)
     student_name = models.CharField(max_length=200)
 
     def __str__(self):
