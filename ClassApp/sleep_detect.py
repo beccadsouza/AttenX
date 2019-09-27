@@ -20,6 +20,7 @@ def getSleepNumber(frames):
     detect = dlib.get_frontal_face_detector()
     predict = dlib.shape_predictor("model/shape_predictor_68_face_landmarks.dat")  # Dat file is the crux of the code
 
+    sleepy_coordinates = []
     (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
     (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
     flag = 0
@@ -32,6 +33,9 @@ def getSleepNumber(frames):
             shape = face_utils.shape_to_np(shape)  # converting to NumPy Array
             leftEye = shape[lStart:lEnd]
             rightEye = shape[rStart:rEnd]
+
+            coordinates=[leftEye, rightEye]
+
             leftEAR = eye_aspect_ratio(leftEye)
             rightEAR = eye_aspect_ratio(rightEye)
             ear = (leftEAR + rightEAR) / 2.0
@@ -39,6 +43,7 @@ def getSleepNumber(frames):
                 flag += 1
                 if flag >= frame_check:
                     n_sleep += 1
+                    sleepy_coordinates.append(coordinates)
             else:
                 flag = 0
-    return n_sleep
+    return n_sleep, sleepy_coordinates
