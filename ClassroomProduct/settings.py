@@ -26,9 +26,7 @@ SECRET_KEY = '0=03ow@@y1s!cra=bm%1x**qe%x%ni2a1fq+78*t=l8obnvs$8'
 DEBUG = True
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
 
-ALLOWED_HOSTS = [
-    "*",
-]
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'signout'
@@ -45,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'qr_code',
-    'ClassApp.apps.ClassappConfig'
+    'ClassApp.apps.ClassappConfig',
+    'sslserver'
 ]
 
 MIDDLEWARE = [
