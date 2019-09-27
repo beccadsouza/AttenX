@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
+from ClassApp.models import *
+
 from PIL import Image
 import numpy as np
 import json
@@ -24,8 +26,9 @@ def signout(request):
 
 
 def qrcode(request):
-    context = dict(key="rebecca", my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
-    return render(request, 'qr_code.html', context=context)
+    prim_key = ClassAttentionSession.objects.all()[0].hash_key
+    context = dict(key=prim_key, my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
+    return render(request, 'attention/qr_code.html', context=context)
 
 
 @csrf_exempt

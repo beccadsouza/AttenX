@@ -8,6 +8,7 @@ from . import views
 
 urlpatterns = [
 	url(r'admin/', admin.site.urls),
+	url(r'classapp/', include('ClassApp.urls')),
 	url(r'accounts/', include('django.contrib.auth.urls')),
 	url(r'^signout/', views.signout, name='signout'),
 	url(r'^dashboard/', views.dashboard, name='dashboard'),
