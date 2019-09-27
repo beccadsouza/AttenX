@@ -26,7 +26,7 @@ def signout(request):
 
 
 def qrcode(request):
-    prim_key = ClassAttentionSession.objects.all()[0].hash_key
+    prim_key = ClassAttentionID.objects.all()[0].hash_key
     context = dict(key=prim_key, my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
     return render(request, 'attention/qr_code.html', context=context)
 
