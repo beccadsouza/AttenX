@@ -1,9 +1,12 @@
 from django.shortcuts import render
 import datetime
-from .pose_detect import getPoseAttention
-from .gaze_detect import getGazeAttention
-from .sleep_detect import getSleepNumber
-from .models import ClassAttention
+from pose_detect import getPoseAttention
+from gaze_detect import getGazeAttention
+from sleep_detect import getSleepNumber
+from models import ClassAttention
+import os
+import cv2
+import face_recognition
 
 # Create your views here.
 def MakeAttention(request):
@@ -24,8 +27,21 @@ def MakeAttention(request):
 
 def DetectAttendance(request):
     photo=() # numpy array
+    faces=[]
+    cv2.imwrite("attendance_students/unknown.jpg",photo)
+    for img_name in os.listdir("attendance_students"):
+        known_image = face_recognition.load_image_file(img_name)
+        biden_encoding = face_recognition.face_encodings(known_image)[0]
+        faces.append(biden_encoding)
 
-    # Store id
+    unknown_image = face_recognition.load_image_file("attendance_students/unknown.jpg")
+    unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+    results = face_recognition.compare_faces(faces, unknown_encoding)
+
+    for i,result in enumerate(results):
+        if result:
+            student_name=os.listdir("attendance_students")[i]
+            #Add model code
     return 0
 
 
