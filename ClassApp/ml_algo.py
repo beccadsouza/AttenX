@@ -10,15 +10,11 @@ import cv2
 import face_recognition
 
 # Create your views here.
-def MakeAttention(request):
-    frames = [cv2.imread('ClassApp/attendance_students/tejas.jpg'),
-              cv2.imread('ClassApp/attendance_students/tejas.jpg'),
-              cv2.imread('ClassApp/attendance_students/tejas.jpg'),
-              cv2.imread('ClassApp/attendance_students/tejas.jpg'),
-              cv2.imread('ClassApp/attendance_students/tejas.jpg')
-              ]  # list of frames each being a numpy array image
-
+def MakeAttention(frames):
+    # frames = []  # list of frames each being a numpy array image
+    print(frames[-1])
     gaze_attn = getGazeAttention(frames[-1])
+    print("ga", gaze_attn)
     (pose_attn, n_q, n_b, n_p) = getPoseAttention(frames[-1])
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
@@ -28,7 +24,7 @@ def MakeAttention(request):
         hash_key="1",gz_attn=str(gaze_attn),ps_attn=str(pose_attn),sleep_n=str(sleep_n),
         ov_attn=str(ov_attn),n_q=str(n_q),n_b=str(n_b),n_p=str(n_p),pos_attn="top left")
     obj.save()
-    return HttpResponse('tejas')
+    # return HttpResponse('tejas')
 
 
 def DetectAttendance(request):

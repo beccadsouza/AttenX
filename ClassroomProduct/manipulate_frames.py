@@ -34,12 +34,13 @@ def capture_list(request):
     height = int(request.POST.get('height'))
 
     for frame in list_frames:
-        img = frame['data'].values()
+        img = list(frame['data'].values())
         temp1 = [img[i:i + 3] for i in range(0, len(img), 4)]
         temp2 = [temp1[i:i + width] for i in range(0, len(temp1), width)]
-        np_frame = Image.fromarray(np.array(temp2, dtype=np.uint8))
+        # np_frame = Image.fromarray(np.array(temp2, dtype=np.uint8))
+        np_frame = np.array(temp2, dtype=np.uint8)
         np_frames.append(np_frame)
-
+    print("Sending frames to ML Model")
     MakeAttention(np_frames)
 
     return HttpResponse('OK')
