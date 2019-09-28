@@ -158,6 +158,9 @@ def getPersonwiseKeypoints(valid_pairs, invalid_pairs, keypoints_list):
                     personwiseKeypoints = np.vstack([personwiseKeypoints, row])
     return personwiseKeypoints
 
+def distance(x1,y1,x2,y2):
+    return ((x1-x2)**2 + (y1-y2)**2)**0.5
+
 def getPoseAttention(image1):
     frameWidth = image1.shape[1]
     frameHeight = image1.shape[0]
@@ -200,7 +203,7 @@ def getPoseAttention(image1):
     personwise_data = []
 
     for n in range(len(personwiseKeypoints)):
-        data = []
+        data = {}
         for i in range(17):
             index = personwiseKeypoints[n][np.array(POSE_PAIRS[i])]
             if -1 in index:
@@ -209,10 +212,13 @@ def getPoseAttention(image1):
             B = np.int32(keypoints_list[index.astype(int), 0])
             A = np.int32(keypoints_list[index.astype(int), 1])
 
-            tag = [keypointsMapping[POSE_PAIRS[i][0]], keypointsMapping[POSE_PAIRS[i][1]]]
             coord1 = [B[0], A[0]]
             coord2 = [B[1], A[1]]
-            data.append([tag, coord1, coord2])
+            
+            data[keypointsMapping[POSE_PAIRS[i][0]]]=coord1
+            data[keypointsMapping[POSE_PAIRS[i][1]]]=coord2
+    
+            tag = [keypointsMapping[POSE_PAIRS[i][0]], keypointsMapping[POSE_PAIRS[i][1]]]
             cv2.line(frameClone, (B[0], A[0]), (B[1], A[1]), colors[i], 3, cv2.LINE_AA)
         personwise_data.append(data)
 
@@ -221,8 +227,56 @@ def getPoseAttention(image1):
     n_q=0
     n_b=0
     n_p=0
+
     for person_data in personwise_data:
-        multiplication_factor = 1  # inferred from rules
+        print(person_data)
+        multiplication_factor=1
+        try:
+            d1=0.00001
+            if "R-Eye" in person_data and "R-Elb" in person_data:
+                d1= abs(person_data["R-Eye"][1]-max(person_data["R-Elb"][0],person_data["R-Elb"][1]))
+            
+            elif "R-Eye" in person_data and "L-Elb" in person_data:
+                d1= abs(person_data["R-Eye"][1]-max(person_data["L-Elb"][0],person_data["L-Elb"][1]))
+
+            d2=0.01
+            if "L-Elb" in person_data and "R-Elb" in person_data:
+                d2 = distance(person_data["L-Elb"][0],person_data["L-Elb"][1],person_data["R-Elb"][0],person_data["R-Elb"][1])
+            
+            elif "L-Elb" in person_data:
+                d2 = 2*distance(person_data["L-Elb"][0],person_data["L-Elb"][1],person_data["L-Eye"][0],person_data["L-Eye"][1])
+            
+            elif "R-Elb" in person_data:
+                d2 = 2*distance(person_data["R-Elb"][0],person_data["R-Elb"][1],person_data["R-Eye"][0],person_data["R-Eye"][1])
+            
+            if d1/d2<0.3 and d1/d2>0.05:
+                pass #Person is sleeping
+            elif d1/d2>=0.3 and d1/d2<0.5:
+                n_p+=1
+                pass #Person is writing
+            elif d1/d2>=0.5:
+                n_b+=1
+                pass #Person is upright
+            multiplication_factor = d1/d2
+        
+            if "R-Wr" in person_data and "L-Wr" in person_data:
+                if person_data["R-Eye"][1]<max(person_data["L-Wr"][1],person_data["R-Wr"][1]):
+                    n_q+=1
+                    pass #Person is raising hand
+            elif "L-Wr" in person_data:
+                if person_data["R-Eye"][1]<person_data["L-Wr"][1]
+                    n_q+=1
+                    pass #Person is raising hand
+            elif "R-Wr" in person_data:
+                if person_data["R-Eye"][1]<person_data["R-Wr"][1]
+                    n_q+=1
+                    pass #Person is raising hand
+            elif "R-Hip" or "L-Hip" in person_data:
+                n_q+=1
+                pass #Perons is standing/answering question
+        except:
+            pass
+
         attn += multiplication_factor
 
     print("POSE Answer",attn/(len(personwise_data)+1)*100)
