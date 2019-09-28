@@ -9,11 +9,15 @@
   let photo = null;
   let startbutton = null;
 
+  let stop = false;
+  let frame_list = [];
+
   function startup() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
     startbutton = document.getElementById('startbutton');
+    stopbutton = document.getElementById('stopbutton');
 
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
@@ -41,13 +45,21 @@
     }, false);
 
     startbutton.addEventListener('click', function(ev){
+      alert("Attention Tracking has begun. Click stop to terminate it.")
       takepicture();
       ev.preventDefault();
     }, false);
     clearphoto();
+
+    stopbutton.addEventListener('click', function(ev){
+      stop = true;
+      ev.preventDefault();
+    }, false);
+    clearphoto();
+
+
   }
 
-  var frame_list = [];
 
   function takepicture() {
     let context = canvas.getContext('2d');
@@ -64,6 +76,17 @@
               'list' : JSON.stringify([arr]),
               'height':height,
               'width':width,
+          },
+          complete: function () {
+            if (stop){
+              console.log("Stop button clicked. Recording finished.");
+              alert("Terminating Attention Detection. Insights and Recommendations available in Analytics Section")
+            }
+            else{
+              console.log("Continuing recording.");
+              setTimeout(takepicture, 2000);
+            }
+
           }
         });
     } else {

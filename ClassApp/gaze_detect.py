@@ -64,6 +64,6 @@ def getGazeAttention(image):
             del_y = del_y + t2*C
 
     total_del = (del_x + del_y)/2
-    attention_percent = ((len(all_faces) - total_del)*100)/len(all_faces)
+    attention_percent = ((len(all_faces) - total_del)*100)/(len(all_faces)+1)
     print("GAZE ATTENTION", total_del, attention_percent, len(all_faces))
     return attention_percent

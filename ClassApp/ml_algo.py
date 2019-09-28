@@ -8,6 +8,8 @@ from ClassApp.models import *
 import os
 import cv2
 import face_recognition
+import numpy as np
+import random
 
 # Create your views here.
 def MakeAttention(frames):
@@ -19,6 +21,8 @@ def MakeAttention(frames):
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
     ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
+              # + random.randrange(60, 70)
+    ov_attn = str(int(ov_attn))
     print(ov_attn)
 
     session_id = list(ClassAttentionID.objects.all().filter(session_teacher="rebecca"))[-1].hash_key

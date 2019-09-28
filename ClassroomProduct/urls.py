@@ -16,6 +16,7 @@ urlpatterns = [
 	url(r'^recordattendance/', views.record_attendance, name="attendance"),
 	url(r'^createsession/',views.create_session, name="createsession"),
 	url(r'^streamsession/',views.stream_session,name="streamsession"),
+    url(r'^qrcodegen/',views.qr_code_session),
 
 	url(r'^capture/', manipulate_frames.capture_list, name="capture"),
 	url(r"^dummy/", manipulate_frames.dummy, name="dummy"),
