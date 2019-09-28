@@ -18,6 +18,13 @@ def getGazeAttention(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     image_x = gray.shape[0]
     image_y = gray.shape[1]
+
+    x_mid = image_x/2
+    y_mid = image_y/2
+
+    del_x=0
+    del_y=0
+
     all_faces, all_coordinates = detect(gray, image)
     gaze = GazeTracking()
 
@@ -25,13 +32,38 @@ def getGazeAttention(image):
         gaze.refresh(frame)
         text=""
 
+        t1=0
+        t2=0
+        R=0
+        C=0
+        L=0
+
         ## Code for attention as per person position
+        if all_coordinates[i][0]<x_mid:
+            t1 = abs(all_coordinates[i][0]-x_mid)/x_mid
+            t2 = abs(all_coordinates[i][1])/y_mid
+            R=0
+            C=0.5
+            L=1
+
+        else:
+            t1 = abs(all_coordinates[i][0] - x_mid) / x_mid
+            t2 = abs(all_coordinates[i][1]) / y_mid
+            R = 1
+            C = 0.5
+            L = 0
 
         if gaze.is_right():
-            text = "Looking right"
+            del_x = del_x + t1*R
+            del_y = del_y + t2*R
         elif gaze.is_left():
-            text = "Looking left"
+            del_x = del_x + t1*L
+            del_y = del_y + t2*L
         elif gaze.is_center():
-            text = "Looking center"
+            del_x = del_x + t1*C
+            del_y = del_y + t2*C
 
-    return 100
+    total_del = (del_x + del_y)/2
+    attention_percent = ((len(all_faces) - total_del)*100)/len(all_faces)
+    print("GAZE ATTENTION", total_del, attention_percent, len(all_faces))
+    return attention_percent
