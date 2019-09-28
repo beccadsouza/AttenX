@@ -43,13 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'qr_code',
-<<<<<<< HEAD
-    'sslserver',
-    'ClassApp.apps.ClassappConfig'
-=======
     'ClassApp.apps.ClassappConfig',
     'sslserver'
->>>>>>> b56451a7884b0ced70509c25272d6ab75a1eadd5
 ]
 
 MIDDLEWARE = [
