@@ -3,10 +3,10 @@ import time
 import numpy as np
 from random import randint
 
-image1 = cv2.imread("c1.jpg")
+image1 = cv2.imread("ClassApp/models/c1.jpg")
 
-protoFile = "pose_deploy_linevec.prototxt"
-weightsFile = "pose_iter_440000.caffemodel"
+protoFile = "ClassApp/models/pose_deploy_linevec.prototxt"
+weightsFile = "ClassApp/models/pose_iter_440000.caffemodel"
 nPoints = 18
 # COCO Output Format
 keypointsMapping = ['Nose', 'Neck', 'R-Sho', 'R-Elb', 'R-Wr', 'L-Sho', 'L-Elb', 'L-Wr', 'R-Hip', 'R-Knee', 'R-Ank',
@@ -36,7 +36,7 @@ def getKeypoints(probMap, threshold=0.1):
     keypoints = []
 
     # find the blobs
-    _, contours, _ = cv2.findContours(mapMask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(mapMask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # for each blob find the maxima
     for cnt in contours:

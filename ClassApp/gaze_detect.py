@@ -1,8 +1,7 @@
-from gaze_tracking import GazeTracking
+from .gaze_tracking import GazeTracking
 import cv2
 
-face_cascade = cv2.CascadeClassifier('models/haarcascade_frontalface_default.xml')
-
+face_cascade = cv2.CascadeClassifier('ClassApp/models/haarcascade_frontalface_default.xml')
 
 def detect(gray, frame):
     all_roi_faces=[]

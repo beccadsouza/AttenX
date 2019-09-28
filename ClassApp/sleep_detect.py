@@ -18,7 +18,7 @@ def getSleepNumber(frames):
     n_sleep=0
     frame_check = 20
     detect = dlib.get_frontal_face_detector()
-    predict = dlib.shape_predictor("model/shape_predictor_68_face_landmarks.dat")  # Dat file is the crux of the code
+    predict = dlib.shape_predictor("ClassApp/models/shape_predictor_68_face_landmarks.dat")  # Dat file is the crux of the code
 
     sleepy_coordinates = []
     (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]

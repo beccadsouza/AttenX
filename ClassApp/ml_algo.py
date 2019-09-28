@@ -1,17 +1,20 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 import datetime
-from pose_detect import getPoseAttention
-from gaze_detect import getGazeAttention
-from sleep_detect import getSleepNumber
-from models import ClassAttention
+from ClassApp.pose_detect import getPoseAttention
+from ClassApp.gaze_detect import getGazeAttention
+from ClassApp.sleep_detect import getSleepNumber
+from ClassApp.models import *
 import os
 import cv2
 import face_recognition
 
 # Create your views here.
 def MakeAttention(request):
-    frames = []  # list of frames each being a numpy array image
-
+    print(os.getcwd())
+    print(os.path.exists("ClassApp/attendance_students/tejas.jpg"))
+    frames = [cv2.imread('ClassApp/attendance_students/tejas.jpg')]  # list of frames each being a numpy array image
+    print(frames[0].shape)
     curr_time = str(datetime.datetime.now().time())
 
     gaze_attn = getGazeAttention(frames[0])
@@ -19,10 +22,10 @@ def MakeAttention(request):
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
     ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
-
-    obj = ClassAttention.objects.create(curr_time,gaze_attn,pose_attn,sleep_n,ov_attn,n_q,n_b,n_p)
-    obj.save()
-    return 0
+    print(ov_attn)
+    # obj = ClassAttention.objects.create(curr_time,gaze_attn,pose_attn,sleep_n,ov_attn,n_q,n_b,n_p,"top left")
+    # obj.save()
+    return HttpResponse('tejas')
 
 
 def DetectAttendance(request):
