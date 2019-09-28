@@ -6,5 +6,6 @@ app_name = 'classapp'
 
 urlpatterns = [
     path('tejas/', MakeAttention),
+    path('attendance/', DetectAttendance),
     path('<parameter1>/', get_recent_attention_percentage),
 ]
