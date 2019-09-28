@@ -3,7 +3,8 @@ from ClassApp.models import *
 
 
 def get_recent_attention_percentage(request, parameter1):
-    attention_obj = ClassAttentionID.objects.get(hash_key=parameter1)
+    attention_obj = list(ClassAttentionID.objects.all().filter(hash_key=parameter1))[-1].hash_key
+
     data = {
         "class_id": attention_obj.class_id,
         "overall_attention": attention_obj.ov_attn,
