@@ -264,11 +264,11 @@ def getPoseAttention(image1):
                     n_q+=1
                     pass #Person is raising hand
             elif "L-Wr" in person_data:
-                if person_data["R-Eye"][1]<person_data["L-Wr"][1]
+                if person_data["R-Eye"][1]<person_data["L-Wr"][1]:
                     n_q+=1
                     pass #Person is raising hand
             elif "R-Wr" in person_data:
-                if person_data["R-Eye"][1]<person_data["R-Wr"][1]
+                if person_data["R-Eye"][1]<person_data["R-Wr"][1]:
                     n_q+=1
                     pass #Person is raising hand
             elif "R-Hip" or "L-Hip" in person_data:
