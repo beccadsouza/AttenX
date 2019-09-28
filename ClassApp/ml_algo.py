@@ -38,8 +38,8 @@ def MakeAttention(frames):
     # return HttpResponse('tejas')
 
 
-def DetectAttendance(request):
-    photo=cv2.imread('ClassApp/attendance_students/tejas.jpg') # numpy array
+def DetectAttendance(frames, course, course_time):
+    photo=frames[0] # numpy array
     faces=[]
     cv2.imwrite("ClassApp/attendance_students/unknown.jpg",photo)
     for img_name in os.listdir("ClassApp/attendance_students"):
@@ -54,8 +54,7 @@ def DetectAttendance(request):
     for i,result in enumerate(results):
         if result:
             student_name=os.listdir("ClassApp/attendance_students")[i]
-            obj = ClassAttendance(
-                hash_key="1",class_id="1",student_name=student_name)
+            obj = ClassAttendance(course=str(course), course_time=str(course_time), student_name=student_name)
             obj.save()
             return HttpResponse('tc')
 

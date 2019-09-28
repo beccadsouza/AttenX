@@ -26,9 +26,8 @@ class ClassAttentionID(models.Model):
 
 
 class ClassAttendance(models.Model):
-    hash_key = models.CharField(max_length=100)
-    time_stamp = models.DateTimeField(auto_now_add=True)
-    class_id = models.CharField(max_length=100)
+    course_time = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
     student_name = models.CharField(max_length=200)
 
     def __str__(self):

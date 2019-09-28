@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from ClassApp.models import *
+import time
 
 
 def get_recent_attention_percentage(request, parameter1):
@@ -8,9 +9,10 @@ def get_recent_attention_percentage(request, parameter1):
 
     if len(attention_obj_list) == 0:
         data = {
+            "time_stamp": time.time(),
             "class_id": attention_id.class_id,
             "session_teacher": attention_id.session_teacher,
-            "overall_attention": 0,
+            "overall_attention": -1,
             "n_q": 0, #Number of students in Questionning position
             "n_b": 0, #Number of students in Board looking position
             "n_p": 0, #Number of students in Problem Solving  position
@@ -20,6 +22,7 @@ def get_recent_attention_percentage(request, parameter1):
         attention_obj = attention_obj_list[-1]
 
         data = {
+            "time_stamp": attention_obj.time_stamp,
             "class_id": attention_id.class_id,
             "session_teacher": attention_id.session_teacher,
             "overall_attention": attention_obj.ov_attn,
