@@ -224,9 +224,10 @@ def getPoseAttention(image1):
 
     rules = []
     attn = 0
-    n_q=0
-    n_b=0
-    n_p=0
+    n_q = 0
+    n_b = 0
+    n_p = 0
+    unattentive_coordinates = []
 
     for person_data in personwise_data:
         print(person_data)
@@ -250,6 +251,7 @@ def getPoseAttention(image1):
                 d2 = 2*distance(person_data["R-Elb"][0],person_data["R-Elb"][1],person_data["R-Eye"][0],person_data["R-Eye"][1])
             
             if d1/d2<0.3 and d1/d2>0.05:
+                unattentive_coordinates.append([person_data["R-Eye"][0],person_data["R-Eye"][1]])
                 pass #Person is sleeping
             elif d1/d2>=0.3 and d1/d2<0.5:
                 n_p+=1
@@ -280,4 +282,4 @@ def getPoseAttention(image1):
         attn += multiplication_factor
 
     print("POSE Answer",attn/(len(personwise_data)+1)*100)
-    return (attn/(len(personwise_data)+1)*100,n_q,n_b,n_p)
+    return ((attn/(len(personwise_data)+0.1))*100,n_q,n_b,n_p,unattentive_coordinates)

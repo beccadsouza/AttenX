@@ -18,7 +18,7 @@ def MakeAttention(frames):
     print(frames[-1])
     gaze_attn = getGazeAttention(frames[-1])
     print("ga", gaze_attn)
-    (pose_attn, n_q, n_b, n_p) = getPoseAttention(frames[-1])
+    (pose_attn, n_q, n_b, n_p, unattentive_coordinates) = getPoseAttention(frames[-1])
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
     #ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
@@ -31,9 +31,39 @@ def MakeAttention(frames):
 
     session_id = list(ClassAttentionID.objects.all().filter(session_teacher="rebecca"))[-1].hash_key
 
+    image_x = frames[-1].shape[0]
+    image_y = frames[-1].shape[1]
+
+    t_l = 0
+    b_l = 0
+    t_r = 0
+    b_r = 0
+
+    for coordinate in unattentive_coordinates:
+        if coordinate[0]<(image_x/2) and coordinate[1]<(image_y/2):
+            t_l+=1
+        elif coordinate[0] < (image_x / 2) and coordinate[1] > (image_y / 2):
+            b_l += 1
+        if coordinate[0] > (image_x / 2) and coordinate[1] < (image_y / 2):
+            t_r += 1
+        if coordinate[0] > (image_x / 2) and coordinate[1] > (image_y / 2):
+            b_r += 1
+
+    max_value = max(t_l, b_l, t_r, b_r)
+    location_text="Top Left"
+
+    if max_value==b_l:
+        location_text="Bottom Left"
+
+    elif max_value==t_r:
+        location_text="Top Right"
+
+    elif max_value==b_r:
+        location_text="Bottom Right"
+
     obj = ClassAttention(
         hash_key=session_id,gz_attn=str(gaze_attn),ps_attn=str(pose_attn),sleep_n=str(sleep_n),
-        ov_attn=str(ov_attn),n_q=str(n_q),n_b=str(n_b),n_p=str(n_p),pos_attn="top left")
+        ov_attn=str(ov_attn),n_q=str(n_q),n_b=str(n_b),n_p=str(n_p),pos_attn=location_text)
     obj.save()
     # return HttpResponse('tejas')
 
