@@ -2,7 +2,7 @@ from django import forms
 from . import models
 
 
-class CreateClassAttentionSession(forms.ModelForm):
+class CreateClassAttentionID(forms.ModelForm):
     class Meta:
-        model = models.ClassAttentionSession
+        model = models.ClassAttentionID
         fields = ['class_id']

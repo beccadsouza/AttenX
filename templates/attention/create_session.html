@@ -5,6 +5,11 @@
     <title>Create Session</title>
 </head>
 <body>
-
+    <form class="site-form" action="/createsession/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="id_class_id">Class id:</label>
+        <input type="text" name="class_id" maxlength="100" required="" id="id_class_id">
+        <input type="submit" value="Create" id="id_add_hackathon">
+    </form>
 </body>
 </html>

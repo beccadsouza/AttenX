@@ -80,7 +80,8 @@
           complete: function () {
             if (stop){
               console.log("Stop button clicked. Recording finished.");
-              alert("Terminating Attention Detection. Insights and Recommendations available in Analytics Section")
+              alert("Terminating Attention Detection. Insights and Recommendations available in Analytics Section");
+              window.location.href = '/home';
             }
             else{
               console.log("Continuing recording.");
