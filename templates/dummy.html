@@ -1,0 +1,51 @@
+{% load static from staticfiles  %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Dummy</title>
+        <link rel="stylesheet" href="{% static 'css/capture.css' %}">
+        <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+        <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            html, body, div{
+                height: 100%;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    </head>
+
+    <body style="background-color: #deedff">
+
+         <a href="{% url 'logout' %}" class="light-blue-text text-darken-3 right btn white" style="font-weight:bold;margin-right:30px;margin-top: 15px">Log Out</a>
+        <div class="contentarea">
+            <h1>
+                Send Frames
+            </h1>
+            <div class="camera">
+                <video id="video">Video stream not available.</video>
+                <button id="startbutton">Start Recording</button>
+                <br>
+                <button id="stopbutton">Stop Recording</button>
+            </div>
+            <canvas id="canvas">
+
+            </canvas>
+            <div class="output">
+                <img id="photo" alt="The screen capture will appear in this box.">
+            </div>
+        </div>
+
+        <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/dummy_capture.js' %}"></script>
+        <script>
+            M.AutoInit();
+        </script>
+    </body>
+</html>
