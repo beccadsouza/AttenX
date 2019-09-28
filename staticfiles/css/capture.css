@@ -26,7 +26,7 @@
   display:inline-block;
 }
 
-#startbutton {
+#startbutton,#stopbutton {
   display:block;
   position:relative;
   margin-left:auto;

@@ -44,10 +44,32 @@
       takepicture();
       ev.preventDefault();
     }, false);
-
     clearphoto();
   }
 
+  var frame_list = [];
+
+  function takepicture() {
+    let context = canvas.getContext('2d');
+    if (width && height) {
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(video, 0, 0, width, height);
+      let data = canvas.toDataURL('image/png');
+      let arr = canvas.getContext('2d').getImageData(0, 0, width, height);
+      $.ajax({
+          type: 'POST',
+          url: '/capture/',
+          data: {
+              'list' : JSON.stringify([arr]),
+              'height':height,
+              'width':width,
+          }
+        });
+    } else {
+      clearphoto();
+    }
+  }
 
   function clearphoto() {
     let context = canvas.getContext('2d');
@@ -58,29 +80,6 @@
     photo.setAttribute('src', data);
   }
 
-  function takepicture() {
-    let context = canvas.getContext('2d');
-    if (width && height) {
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-      let data = canvas.toDataURL('image/png');
-      let arr = canvas.getContext('2d').getImageData(0,0,width,height);
-      let list = [arr, arr];
-      console.log(list);
-        $.ajax({
-            type: 'POST',
-            url: '/capture/',
-            data: {
-                'list' : JSON.stringify(list),
-                'height':height,
-                'width':width,
-            }
-        });
-      photo.setAttribute('src', data);
-    } else {
-      clearphoto();
-    }
-  }
   window.addEventListener('load', startup, false);
+
 })();

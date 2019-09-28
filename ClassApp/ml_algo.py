@@ -20,8 +20,11 @@ def MakeAttention(frames):
 
     ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
     print(ov_attn)
+
+    session_id = list(ClassAttentionID.objects.all().filter(session_teacher="rebecca"))[-1].hash_key
+
     obj = ClassAttention(
-        hash_key="1",gz_attn=str(gaze_attn),ps_attn=str(pose_attn),sleep_n=str(sleep_n),
+        hash_key=session_id,gz_attn=str(gaze_attn),ps_attn=str(pose_attn),sleep_n=str(sleep_n),
         ov_attn=str(ov_attn),n_q=str(n_q),n_b=str(n_b),n_p=str(n_p),pos_attn="top left")
     obj.save()
     # return HttpResponse('tejas')

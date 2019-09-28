@@ -25,7 +25,7 @@ def create_session(request):
 
 
 def qr_code_session(request):
-    prim_key = ClassAttentionID.objects.all()[0].hash_key
+    prim_key = list(ClassAttentionID.objects.all().filter(session_teacher="rebecca"))[-1].hash_key
     context = dict(key=prim_key, my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
     return render(request, 'attention/qr_code_session.html', context=context)
 

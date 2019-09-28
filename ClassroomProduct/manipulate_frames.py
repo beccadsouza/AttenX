@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
-
+import time
 
 
 from ClassApp.ml_algo import *
@@ -30,6 +30,7 @@ def dummy(request):
 def capture_list(request):
     np_frames = []
     list_frames = ast.literal_eval(request.POST.get('list'))
+    print("Received", len(list_frames), "frames")
     width = int(request.POST.get('width'))
     height = int(request.POST.get('height'))
 
@@ -40,7 +41,8 @@ def capture_list(request):
         # np_frame = Image.fromarray(np.array(temp2, dtype=np.uint8))
         np_frame = np.array(temp2, dtype=np.uint8)
         np_frames.append(np_frame)
-    print("Sending frames to ML Model")
+        Image.fromarray(np.array(temp2, dtype=np.uint8)).save("{0}.png".format(time.time()))
+    # print("Sending frames to ML Model", len(np_frames))
     MakeAttention(np_frames)
 
     return HttpResponse('OK')
