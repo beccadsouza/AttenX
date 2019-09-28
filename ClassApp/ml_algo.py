@@ -8,6 +8,7 @@ from ClassApp.models import *
 import os
 import cv2
 import face_recognition
+from sklearn.externals import joblib
 import numpy as np
 import random
 
@@ -20,8 +21,11 @@ def MakeAttention(frames):
     (pose_attn, n_q, n_b, n_p) = getPoseAttention(frames[-1])
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
-    ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
+    #ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
               # + random.randrange(60, 70)
+
+    predictor_model = joblib.load('ClassApp/models/MLP_predictor.pkl')
+    ov_attn = predictor_model.predict([[gaze_attn, pose_attn, sleep_n]])[0]
     ov_attn = str(int(ov_attn))
     print(ov_attn)
 
