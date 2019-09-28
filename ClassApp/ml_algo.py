@@ -20,7 +20,8 @@ def MakeAttention(frames):
     (pose_attn, n_q, n_b, n_p) = getPoseAttention(frames[-1])
     sleep_n, sleep_coordinates = getSleepNumber(frames)
 
-    ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n + random.randrange(60, 70)
+    ov_attn = (gaze_attn+pose_attn)/2 - 0.1*sleep_n
+              # + random.randrange(60, 70)
     ov_attn = str(int(ov_attn))
     print(ov_attn)
 
