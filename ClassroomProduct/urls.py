@@ -13,13 +13,14 @@ urlpatterns = [
     url(r'^signout/', views.signout, name='signout'),
     url(r'^home/', views.home, name='home'),
 
-    url(r'^recordattendance/', views.record_attendance, name="attendance"),
+    url(r'^recordattendance/', views.record_attendance, name="recordattendance"),
+    url(r'^captureface/', manipulate_frames.capture_face, name="captureface"),
+
     url(r'^createsession/', views.create_session, name="createsession"),
     url(r'^streamsession/', views.stream_session, name="streamsession"),
     url(r'^qrcodegen/', views.qr_code_session, name="qrcodegen"),
-
     url(r'^capture/', manipulate_frames.capture_list, name="capture"),
-    url(r"^dummy/", manipulate_frames.dummy, name="dummy"),
+    # url(r"^dummy/", manipulate_frames.dummy, name="dummy"),
 
     url(r'^', RedirectView.as_view(pattern_name='home', permanent=False)),
 ]
