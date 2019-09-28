@@ -43,7 +43,3 @@ def qr_code_session(request):
 
 def stream_session(request):
     return render(request, 'attention/stream_session.html')
-
-
-
-
