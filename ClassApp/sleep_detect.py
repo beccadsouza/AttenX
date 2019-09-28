@@ -16,7 +16,7 @@ def eye_aspect_ratio(eye):
 def getSleepNumber(frames):
     thresh = 0.25
     n_sleep=0
-    frame_check = 20
+    frame_check = 5
     detect = dlib.get_frontal_face_detector()
     predict = dlib.shape_predictor("ClassApp/models/shape_predictor_68_face_landmarks.dat")  # Dat file is the crux of the code
 
