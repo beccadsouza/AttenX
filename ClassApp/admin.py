@@ -1,9 +1,15 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import ClassAttentionID, ClassAttendance, ClassAttention
-# Register your models here.
+
+
+class ClassAttentionAdmin(admin.ModelAdmin):
+    list_display = ('time_stamp',)
+
+
+class ClassAttentionIDAdmin(admin.ModelAdmin):
+    list_display = ('time_stamp',)
+
+
 admin.site.register(ClassAttendance)
-admin.site.register(ClassAttention)
-admin.site.register(ClassAttentionID)
+admin.site.register(ClassAttention, ClassAttentionAdmin)
+admin.site.register(ClassAttentionID, ClassAttentionIDAdmin)

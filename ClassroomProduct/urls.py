@@ -5,6 +5,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from . import views, manipulate_frames
+from ClassApp.web_api import *
 
 urlpatterns = [
     url(r'admin/', admin.site.urls),
@@ -21,9 +22,10 @@ urlpatterns = [
     url(r'^qrcodegen/', views.qr_code_session, name="qrcodegen"),
     url(r'^capture/', manipulate_frames.capture_list, name="capture"),
 
+    url(r'^sessionanalytics/(?P<parameter1>\w+)/', views.get_session_analytics, name="sessionanalytics"),
     url(r'^sessionlist/', views.get_list_session, name="sessionlist"),
-    url(r'^sessionanalytics/', views.get_session_analytics, name="sessionanalytics"),
 
+    url(r'^graph/donutdata/', donut_data),
     url(r'^', RedirectView.as_view(pattern_name='home', permanent=False)),
 ]
 

@@ -49,6 +49,7 @@ def get_list_session(request):
     return render(request, 'analytics/session_list.html', {'sessions_list':sessions_list})
 
 
-def get_session_analytics(request):
-    hash_key = "abc"
-    return render(request, 'analytics/session_analytics.html', {"session_key":hash_key})
+def get_session_analytics(request, parameter1):
+    hk = parameter1
+    print("function hit")
+    return render(request, 'analytics/session_analytics.html', {"hk":hk})

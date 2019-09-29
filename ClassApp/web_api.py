@@ -1,3 +1,6 @@
+import simplejson
+from django.http import HttpResponse, JsonResponse
+
 from .models import ClassAttention, ClassAttentionID
 
 
@@ -11,18 +14,45 @@ def line_data(request, session_id):
     return data
 
 
-def donut_data(request, teacher_id):
-    subjects = ClassAttentionID.objects.filter(teacher_id)
-    sub_list = {}
-    for subject in subjects:
-        sub_list[getattr(subject, "hash_key")] = getattr(subject, "class_id")
+def donut_data(request):
+    # subjects = ClassAttentionID.objects.filter(teacher_id)
+    # sub_list = {}
+    # for subject in subjects:
+    #     sub_list[getattr(subject, "hash_key")] = getattr(subject, "class_id")
+    #
+    # queryset = ClassAttention.objects.filter(teacher_id)
+    # data = []
+    # datasets = []
+    # labels = []
+    # print(data)
+    # return data
 
-    queryset = ClassAttention.objects.filter(teacher_id)
-    data = []
-    datasets = []
-    labels = []
-    print(data)
-    return data
+    att_id = ClassAttentionID.objects.filter(session_teacher=request.user)
+    course_codes = []
+    for x in att_id:
+        course_codes.append(x.class_id)
+
+    courses = list(set(course_codes))
+
+    course_codes = {}
+
+    for course in courses:
+        n = 0
+        A = 0
+        temp = ClassAttentionID.objects.filter(class_id=course)
+        for hk in temp:
+            timestmps = ClassAttention.objects.filter(hash_key=hk.hash_key)
+            for tp in timestmps:
+                n += 1
+                A += int(tp.ov_attn)
+        if n != 0:
+            course_codes[course] = A/n
+    print(course_codes)
+    data = {
+        "k": list(course_codes.values()),
+        "v": list(course_codes.keys()),
+    }
+    return JsonResponse(data)
 
 
 def bar_data(request, teacher_id):
@@ -54,3 +84,15 @@ def bar_data(request, teacher_id):
         data = [fin_np, fin_nb, fin_nq, timestamp]
     return data
 
+
+def trial(request):
+    response_dict = {
+        'success': True,
+    }
+
+    if request.method == 'POST':
+        hk = request.POST.get('id')
+        print(hk)
+        return JsonResponse(response_dict)
+    else:
+        return JsonResponse({'error': True})

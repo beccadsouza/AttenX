@@ -1,10 +1,11 @@
 from django.db import models
+import datetime
 
 
 # Create your models here.
 class ClassAttention(models.Model):
     hash_key = models.CharField(max_length=100)
-    time_stamp = models.DateTimeField(auto_now_add=True)
+    time_stamp = datetime.datetime.now()
     gz_attn = models.CharField(max_length=100)
     ps_attn = models.CharField(max_length=100)
     sleep_n = models.CharField(max_length=100)
@@ -21,7 +22,7 @@ class ClassAttention(models.Model):
 class ClassAttentionID(models.Model):
     hash_key = models.CharField(max_length=100)
     session_teacher = models.CharField(max_length=100)
-    time_stamp = models.DateField(auto_now_add=True)
+    time_stamp = datetime.datetime.now()
     class_id = models.CharField(max_length=100)
 
 
