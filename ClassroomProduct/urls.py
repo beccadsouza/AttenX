@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^sessionlist/', views.get_list_session, name="sessionlist"),
     url(r'^graph/donutdata/', donut_data),
 
+    url(r'^captureattendance/', manipulate_frames.capture_attendance,name="captureattendance"),
     url(r'^', RedirectView.as_view(pattern_name='home', permanent=False)),
 
 ]

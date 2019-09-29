@@ -12,6 +12,9 @@ from sklearn.externals import joblib
 import numpy as np
 import random
 
+
+# static attendance
+
 # Create your views here.
 def MakeAttention(frames):
     # frames = []  # list of frames each being a numpy array image
@@ -91,7 +94,7 @@ def DetectAttendance(frames, course, course_time):
     return HttpResponse("NA")
 
 
-def StartAttendance(frame, course, course_time):
+def StartAttendance(frame, course=None, course_time=None):
     face_cascade = cv2.CascadeClassifier('ClassApp/models/haarcascade_frontalface_default.xml')
     all_roi_faces = []
     image = frame

@@ -81,6 +81,22 @@
           complete: function () {
             if (stop){
               console.log("Stop button clicked. Recording finished.");
+
+
+              $.ajax({
+                type: 'POST',
+                url: '/captureface/',
+                data: {
+                    'list' : JSON.stringify([arr]),
+                    'height':height,
+                    'width':width,
+                },
+                success:function () {
+                  alert("Attendance Captured!");
+                }
+              });
+
+
               alert("Terminating Attention Detection. Insights and Recommendations available in Analytics Section");
               window.location.href = '/home';
             }
