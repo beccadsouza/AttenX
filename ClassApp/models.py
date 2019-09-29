@@ -16,7 +16,7 @@ class ClassAttention(models.Model):
     pos_attn = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.ov_attn
+        return self.hash_key
 
 
 class ClassAttentionID(models.Model):
@@ -27,9 +27,7 @@ class ClassAttentionID(models.Model):
 
 
 class ClassAttendance(models.Model):
-    course_time = models.CharField(max_length=100)
-    course = models.CharField(max_length=100)
-    student_name = models.CharField(max_length=200)
+    session_teacher = models.CharField(max_length=100)
+    median_attn = models.CharField(max_length=200)
+    num_students = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.student_name

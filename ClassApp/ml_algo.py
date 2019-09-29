@@ -95,7 +95,7 @@ def DetectAttendance(frames, course, course_time):
     return HttpResponse("NA")
 
 
-def StartAttendance(frame, course=None, course_time=None):
+def StartAttendance(frame):
     face_cascade = cv2.CascadeClassifier('ClassApp/models/haarcascade_frontalface_default.xml')
     all_roi_faces = []
     image = frame
@@ -123,10 +123,16 @@ def StartAttendance(frame, course=None, course_time=None):
                 face_names.append(student_name)
 
     pd.DataFrame(face_names).to_excel('ClassApp/attendance_records/output.xlsx', header=False, index=False)
-    obj = ClassAttendance(course="BDA", course_time="time", student_name = str(len(face_names)))
+    hk = ClassAttentionID.objects.last()
+    attn = ClassAttention.objects.filter(hash_key=hk).values_list('ov_attn', flat=True)
+    obj = ClassAttendance(median_attn=np.median(np.array(attn)), num_students=str(len(face_names)))
     obj.save()
+
 
 def appInsights():
     # Side of class less attentive
     # Jokes - range of attention
     return 0
+
+
+
