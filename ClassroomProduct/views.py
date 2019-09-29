@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from ClassApp.models import *
 from qr_code.qrcode.utils import QRCodeOptions
 import urllib.parse
+from django.utils import timezone
 
 
 @login_required
@@ -26,7 +27,7 @@ def create_session(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.session_teacher = request.user
-            instance.hash_key = urllib.parse.quote("{0}_{1}".format(request.user, request.POST.get('class_id')))
+            instance.hash_key = urllib.parse.quote("{0}_{1}_{2}".format(request.user, request.POST.get('class_id'),timezone.now()))
             instance.save()
             return redirect('qrcodegen')
     else:

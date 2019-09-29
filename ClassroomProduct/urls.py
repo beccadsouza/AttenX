@@ -30,8 +30,13 @@ urlpatterns = [
 
     url(r'^sessionanalytics/(?P<parameter1>\w+)/', views.get_session_analytics, name="sessionanalytics"),
     url(r'^sessionlist/', views.get_list_session, name="sessionlist"),
-    url(r'^graph/donutdata/', donut_data),
-    url(r'^graph/trial/(?P<parameter1>\w+)/', trial),
+    url(r'^graph/chart1/', chart1),
+    url(r'^graph/chart2/(?P<parameter1>\w+)/', chart2),
+    url(r'^graph/chart3/', chart3),
+    url(r'^graph/chart4/', chart4),
+
+    # url(r'^graph/donutdata/', donut_data),
+    # url(r'^graph/trial/(?P<parameter1>\w+)/', trial),
 
     url(r'^captureattendance/', manipulate_frames.capture_attendance,name="captureattendance"),
     url(r'^', RedirectView.as_view(pattern_name='home', permanent=False)),

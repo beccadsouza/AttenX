@@ -97,7 +97,7 @@ def DetectAttendance(frames, course, course_time):
     return HttpResponse("NA")
 
 
-def StartAttendance(frame, course=None, course_time=None):
+def StartAttendance(frame):
     face_cascade = cv2.CascadeClassifier('ClassApp/models/haarcascade_frontalface_default.xml')
     all_roi_faces = []
     image = frame
@@ -125,8 +125,11 @@ def StartAttendance(frame, course=None, course_time=None):
                 face_names.append(student_name)
 
     pd.DataFrame(face_names).to_excel('ClassApp/attendance_records/output.xlsx', header=False, index=False)
-    obj = ClassAttendance(course="BDA", course_time="time", student_name = str(len(face_names)))
+    hk = ClassAttentionID.objects.last()
+    attn = ClassAttention.objects.filter(hash_key=hk).values_list('ov_attn', flat=True)
+    obj = ClassAttendance(median_attn=np.median(np.array(attn)), num_students=str(len(face_names)))
     obj.save()
+
 
 def appInsights():
     # Side of class less attentive
@@ -152,20 +155,20 @@ def relation_output(request):
             sum_nq += obj.n_q
             attns.append(obj.ov_attn)
         attns_data.append(statistics.median(attns))
-        
+
         np_data.append(sum_np)
         nq_data.append(sum_nq)
         nb_data.append(sum_nb)
-    
+
     corr = []
     corr.append(pearsonr(attns_data, np_data))
     corr.append(pearsonr(attns_data, nq_data))
     corr.append(pearsonr(attns_data, nb_data))
-    
-    
+
+
     attr = ["Problem Solving", "Question & Answer", "Speaking"]
     val = []
-    
+
     for i in range(len(corr)):
         if corr[i] < 0:
             val.append("Attention is negatively related to " + attr[i] + "by a factor of " + str(corr[i]))
@@ -174,5 +177,8 @@ def relation_output(request):
 
     x = {}
     x["recommendations"] = val
-    
+
     return JsonResponse(x)
+
+
+
