@@ -15,17 +15,6 @@ def line_data(request, session_id):
 
 
 def donut_data(request):
-    # subjects = ClassAttentionID.objects.filter(teacher_id)
-    # sub_list = {}
-    # for subject in subjects:
-    #     sub_list[getattr(subject, "hash_key")] = getattr(subject, "class_id")
-    #
-    # queryset = ClassAttention.objects.filter(teacher_id)
-    # data = []
-    # datasets = []
-    # labels = []
-    # print(data)
-    # return data
 
     att_id = ClassAttentionID.objects.filter(session_teacher=request.user)
     course_codes = []
@@ -85,14 +74,5 @@ def bar_data(request, teacher_id):
     return data
 
 
-def trial(request):
-    response_dict = {
-        'success': True,
-    }
-
-    if request.method == 'POST':
-        hk = request.POST.get('id')
-        print(hk)
-        return JsonResponse(response_dict)
-    else:
-        return JsonResponse({'error': True})
+def trial(request, parameter1):
+    return JsonResponse({'hk': parameter1})

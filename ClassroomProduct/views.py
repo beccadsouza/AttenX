@@ -52,4 +52,4 @@ def get_list_session(request):
 def get_session_analytics(request, parameter1):
     hk = parameter1
     print("function hit")
-    return render(request, 'analytics/session_analytics.html', {"hk":hk})
+    return render(request, 'analytics/session_analytics.html', {"hk": hk})

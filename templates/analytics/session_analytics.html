@@ -25,154 +25,164 @@
         </a>
     </div>
     <br><br><br><br>
-<div class="row">
-    <div class="col m4" style="margin-left: 70px">
-            <canvas id="styleChart" width="800" style="background-color: white"></canvas>
-    </div>
-    <div class="col m4" style="margin-left: 300px">
-        <canvas id="donutChart" width="500" height="400" style="background-color: white"></canvas>
-    </div>
+{#<div class="row">#}
+{#    <div class="col m4" style="margin-left: 70px">#}
+{#            <canvas id="styleChart" width="800" style="background-color: white"></canvas>#}
+{#    </div>#}
+{#    <div class="col m4" style="margin-left: 300px">#}
+{#        <canvas id="donutChart" width="500" height="400" style="background-color: white"></canvas>#}
+{#    </div>#}
 </div>
-
+    {{ hk }}
     <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <script>
         M.AutoInit();
+        console.log("{{ hk }}");
+
+        $.ajax({
+            method:"GET",
+            url:"/graph/trial/" + "{{ hk }}" + "/",
+            success:function (d) {
+                console.log(d);
+            }
+        });
+
     </script>
 
     <script>
         Chart.defaults.global.elements.rectangle.borderColor = '#fff';
-        $.ajax({
-            method:'GET',
-            url:'/graph/donutdata/',
-            success:function(data){
-                console.log(data);
-                let colors = ['#e6194b',
-                    '#b45f7b',
-                    '#ffe119',
-                    '#d8877c',
-                    '#f58231',
-                    '#d39051',
-                    '#f0db8a',
-                    '#f0c7c6',
-                    '#f69d6e',
-                    '#fabebe',
-                    '#80556c',
-                    '#e6beff',
-                    '#e0a4b4',
-                    '#fffac8',
-                    '#800000',
-                    '#ff4261',
-                    '#bca374',
-                    '#ffd8b1',
-                    '#752740',
-                    '#808080',
-                    '#ffffff',
-                    '#000000'];
-                new Chart(document.getElementById("donutChart"), {
-                    type: 'doughnut',
-                    data: {
-                      labels: data.v,
-                      datasets: [
-                        {
-                          label: "Course-Attention Distribution",
-                          backgroundColor: colors,
-                          data: data.k
-                        }
-                      ]
-                    },
-                    options: {
-                        legend:{
-                            position:'right',
-                            align:'middle',
-                            labels: {
-                                    fontSize: 15
-                            },
-                        },
-                        responsive:false,
-                      title: {
-                        display: true,
-                        text: 'Course-Attention Distribution',
-                          fontSize: 22.0,
-                      }
-                    }
-                });
-            },
-        });
-        new Chart(document.getElementById("styleChart"), {
-                        type: 'bar',
-                        data: {
-                            labels: ['Monday 3pm', 'Monday 4pm', 'Tuesday 11am', 'Thursday 2pm'],
-                            datasets: [
-                                {
-                                    label: "Q n A",
-                                    backgroundColor: "rgba(62, 149, 205, 0.5)",
+        {#$.ajax({#}
+        {#    method:'GET',#}
+        {#    url:'/graph/donutdata/',#}
+        {#    success:function(data){#}
+        {#        console.log(data);#}
+        {#        let colors = ['#e6194b',#}
+        {#            '#b45f7b',#}
+        {#            '#ffe119',#}
+        {#            '#d8877c',#}
+        {#            '#f58231',#}
+        {#            '#d39051',#}
+        {#            '#f0db8a',#}
+        {#            '#f0c7c6',#}
+        {#            '#f69d6e',#}
+        {#            '#fabebe',#}
+        {#            '#80556c',#}
+        {#            '#e6beff',#}
+        {#            '#e0a4b4',#}
+        {#            '#fffac8',#}
+        {#            '#800000',#}
+        {#            '#ff4261',#}
+        {#            '#bca374',#}
+        {#            '#ffd8b1',#}
+        {#            '#752740',#}
+        {#            '#808080',#}
+        {#            '#ffffff',#}
+        {#            '#000000'];#}
+        {#        new Chart(document.getElementById("donutChart"), {#}
+        {#            type: 'doughnut',#}
+        {#            data: {#}
+        {#              labels: data.v,#}
+        {#              datasets: [#}
+        {#                {#}
+        {#                  label: "Course-Attention Distribution",#}
+        {#                  backgroundColor: colors,#}
+        {#                  data: data.k#}
+        {#                }#}
+        {#              ]#}
+        {#            },#}
+        {#            options: {#}
+        {#                legend:{#}
+        {#                    position:'right',#}
+        {#                    align:'middle',#}
+        {#                    labels: {#}
+        {#                            fontSize: 15#}
+        {#                    },#}
+        {#                },#}
+        {#                responsive:false,#}
+        {#              title: {#}
+        {#                display: true,#}
+        {#                text: 'Course-Attention Distribution',#}
+        {#                  fontSize: 22.0,#}
+        {#              }#}
+        {#            }#}
+        {#        });#}
+        {#    },#}
+        {# });#}
+        {#new Chart(document.getElementById("styleChart"), {#}
+        {#                type: 'bar',#}
+        {#                data: {#}
+        {#                    labels: ['Monday 3pm', 'Monday 4pm', 'Tuesday 11am', 'Thursday 2pm'],#}
+        {#                    datasets: [#}
+        {#                        {#}
+        {#                            label: "Q n A",#}
+        {#                            backgroundColor: "rgba(62, 149, 205, 0.5)",#}
                                     {#borderColor : "rgba(255, 255, 255, 1)",#}
-                                    pointBackgroundColor: "rgba(62, 149, 205, 1)",
-                                    data: [70,30,5,30],
-                                },
-                                {
-                                    label: "Listening",
-                                    backgroundColor: "rgba(255, 10, 77, 0.5)",
+        {#                            pointBackgroundColor: "rgba(62, 149, 205, 1)",#}
+        {#                            data: [70,30,5,30],#}
+        {#                        },#}
+        {#                        {#}
+        {#                            label: "Listening",#}
+        {#                            backgroundColor: "rgba(255, 10, 77, 0.5)",#}
                                     {#borderColor : "rgba(255, 255, 255, 1)",#}
-                                    pointBackgroundColor: "rgba(255, 10, 77, 1)",
-                                    data: [20,15,90,20],
-                                },
-                                 {
-                                    label: "Problem Solving",
-                                    backgroundColor: "rgb(205,170,52,0.5)",
+        {#                            pointBackgroundColor: "rgba(255, 10, 77, 1)",#}
+        {#                            data: [20,15,90,20],#}
+        {#                        },#}
+        {#                         {#}
+        {#                            label: "Problem Solving",#}
+        {#                            backgroundColor: "rgb(205,170,52,0.5)",#}
                                     {#borderColor : "rgba(255, 255, 255, 1)",#}
-                                    pointBackgroundColor: "rgb(205,170,52,1)",
-                                    data:[10,20,5,50],
-                                },
-                                {
-                                    label: "Attention %",
-                                    backgroundColor: "rgb(133,133,133,0.5)",
+        {#                            pointBackgroundColor: "rgb(205,170,52,1)",#}
+        {#                            data:[10,20,5,50],#}
+        {#                        },#}
+        {#                        {#}
+        {#                            label: "Attention %",#}
+        {#                            backgroundColor: "rgb(133,133,133,0.5)",#}
                                     {#borderColor : "rgba(255, 255, 255, 1)",#}
-                                    pointBackgroundColor: "rgb(133,133,133,1)",
-                                    data: [75,45,15,60],
-                                },
-                            ]
-                        },
-                        options: {
-                            legend: {
-                                labels: {
-                                    fontSize: 18
-                                }
-                            },
-                            title: {
-                                display : true,
-                                text : "Teaching Methodology-Attention Pilot",
-                                fontSize : 22.0
-                             },
-                            scales: {
-                                yAxes: [{
-                                    ticks:{
-                                        beginAtZero: true,
-                                        fontSize:15.0,
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Index or Percentage',
-                                        fontSize :20.0,
-                                    }
-                                }],
-                                xAxes: [{
-                                    ticks:{
-                                      fontSize: 15.0,
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Sessions',
-                                        fontSize : 20.0,
-                                    }
-                                }]
-                              },
-                            responsive: false,
-                        }
-                    });
+        {#                            pointBackgroundColor: "rgb(133,133,133,1)",#}
+        {#                            data: [75,45,15,60],#}
+        {#                        },#}
+        {#                    ]#}
+        {#                },#}
+        {#                options: {#}
+        {#                    legend: {#}
+        {#                        labels: {#}
+        {#                            fontSize: 18#}
+        {#                        }#}
+        {#                    },#}
+        {#                    title: {#}
+        {#                        display : true,#}
+        {#                        text : "Teaching Methodology-Attention Pilot",#}
+        {#                        fontSize : 22.0#}
+        {#                     },#}
+        {#                    scales: {#}
+        {#                        yAxes: [{#}
+        {#                            ticks:{#}
+        {#                                beginAtZero: true,#}
+        {#                                fontSize:15.0,#}
+        {#                            },#}
+        {#                            scaleLabel: {#}
+        {#                                display: true,#}
+        {#                                labelString: 'Index or Percentage',#}
+        {#                                fontSize :20.0,#}
+        {#                            }#}
+        {#                        }],#}
+        {#                        xAxes: [{#}
+        {#                            ticks:{#}
+        {#                              fontSize: 15.0,#}
+        {#                            },#}
+        {#                            scaleLabel: {#}
+        {#                                display: true,#}
+        {#                                labelString: 'Sessions',#}
+        {#                                fontSize : 20.0,#}
+        {#                            }#}
+        {#                        }]#}
+        {#                      },#}
+        {#                    responsive: false,#}
+        {#                }#}
+        {#            });#}
     </script>
 
 </body>
