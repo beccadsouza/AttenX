@@ -9,6 +9,7 @@ import os
 import cv2
 import face_recognition
 from sklearn.externals import joblib
+import pandas as pd
 import numpy as np
 import random
 
@@ -110,6 +111,7 @@ def StartAttendance(frame, course=None, course_time=None):
         biden_encoding = face_recognition.face_encodings(known_image)[0]
         faces_enc.append(biden_encoding)
 
+    face_names=[]
     for face_img in all_roi_faces:
         cv2.imwrite("ClassApp/attendance_students/unknown.jpg", face_img)
         unknown_image = face_recognition.load_image_file("ClassApp/attendance_students/unknown.jpg")
@@ -118,9 +120,11 @@ def StartAttendance(frame, course=None, course_time=None):
         for i, result in enumerate(results):
             if result:
                 student_name = os.listdir("ClassApp/attendance_students")[i]
-                obj = ClassAttendance(course=str(course), course_time=str(course_time), student_name=student_name)
-                obj.save()
+                face_names.append(student_name)
 
+    pd.DataFrame(face_names).to_excel('ClassApp/attendance_records/output.xlsx', header=False, index=False)
+    obj = ClassAttendance(course="BDA", course_time="time", student_name = str(len(face_names)))
+    obj.save()
 
 def appInsights():
     # Side of class less attentive
