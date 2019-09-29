@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Sessions</title>
+</head>
+<body>
+    {% for session in sessions_list %}
+        <h5>{{ session.class_id }} on {{ session.time_stamp }}</h5>
+    {% endfor %}
+</body>
+</html>

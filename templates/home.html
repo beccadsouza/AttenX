@@ -16,8 +16,14 @@
     
 <body style="background-color: rgba(139,128,141,0.9)">
     <div style="margin-top: 20px">
-        <a href="{% url 'logout' %}" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:40px;margin-top: 15px">Log Out</a>
-        <a href="#" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:30px;margin-top: 15px">Terms & Conditions</a>
+        <a href="{% url 'logout' %}" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:40px;margin-top: 15px">
+            <i class="material-icons" style="font-size: 20px;vertical-align:middle !important;">exit_to_app</i>
+            Log Out
+        </a>
+        <a href="#" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:30px;margin-top: 15px">
+            <i class="material-icons" style="font-size: 20px;vertical-align:middle !important;">error_outline</i>
+            Terms & Conditions
+        </a>
     </div>
     <br><br><br><br>
     <div class="container-fluid" style="margin:30px">
@@ -48,7 +54,7 @@
                         I am convenient because I require little markup to use effectively.</p>
                     </div>
                     <div class="card-action">
-                        <a href="{% url 'recordattendance' %}">Take attendance</a>
+                        <a href="{% url 'recordattendance' %}" target="_blank">Take attendance</a>
                     </div>
                 </div>
             </div>
@@ -63,7 +69,7 @@
                         I am convenient because I require little markup to use effectively.</p>
                     </div>
                     <div class="card-action">
-                        <a href="#">Get the insights</a>
+                        <a href="{% url 'sessionlist' %}">Get the insights</a>
                     </div>
                 </div>
             </div>

@@ -20,7 +20,9 @@ urlpatterns = [
     url(r'^streamsession/', views.stream_session, name="streamsession"),
     url(r'^qrcodegen/', views.qr_code_session, name="qrcodegen"),
     url(r'^capture/', manipulate_frames.capture_list, name="capture"),
-    # url(r"^dummy/", manipulate_frames.dummy, name="dummy"),
+
+    url(r'^sessionlist/', views.get_list_session, name="sessionlist"),
+    url(r'^sessionanalytics/', views.get_session_analytics, name="sessionanalytics"),
 
     url(r'^', RedirectView.as_view(pattern_name='home', permanent=False)),
 ]

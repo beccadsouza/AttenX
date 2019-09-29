@@ -1,7 +1,7 @@
 from .models import ClassAttention, ClassAttentionID
 
 
-def line_data(session_id):
+def line_data(request, session_id):
     queryset = ClassAttention.objects.filter(session_id)
     data = []
     for query in queryset:
@@ -11,7 +11,7 @@ def line_data(session_id):
     return data
 
 
-def donut_data(teacher_id):
+def donut_data(request, teacher_id):
     subjects = ClassAttentionID.objects.filter(teacher_id)
     sub_list = {}
     for subject in subjects:
@@ -25,7 +25,7 @@ def donut_data(teacher_id):
     return data
 
 
-def bar_data(teacher_id):
+def bar_data(request, teacher_id):
     query = ClassAttention.objects.filter(teacher_id)
     timestamp = []
     n_q = [[]]

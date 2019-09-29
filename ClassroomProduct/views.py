@@ -1,5 +1,4 @@
 from ClassApp import forms
-import hashlib
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from ClassApp.models import *
@@ -37,9 +36,19 @@ def create_session(request):
 
 def qr_code_session(request):
     prim_key = list(ClassAttentionID.objects.all().filter(session_teacher="rebecca"))[-1].hash_key
-    context = dict(key=prim_key, my_options=QRCodeOptions(size='M', border=6, error_correction='L', image_format='png'))
+    context = dict(key=prim_key, my_options=QRCodeOptions(size='S', border=6, error_correction='L', image_format='png'))
     return render(request, 'attention/qr_code_session.html', context=context)
 
 
 def stream_session(request):
     return render(request, 'attention/stream_session.html')
+
+
+def get_list_session(request):
+    sessions_list = ClassAttentionID.objects.filter(session_teacher=request.user)
+    return render(request, 'analytics/session_list.html', {'sessions_list':sessions_list})
+
+
+def get_session_analytics(request):
+    hash_key = "abc"
+    return render(request, 'analytics/session_analytics.html', {"session_key":hash_key})

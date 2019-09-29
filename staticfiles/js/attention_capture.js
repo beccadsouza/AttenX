@@ -47,6 +47,7 @@
     startbutton.addEventListener('click', function(ev){
       alert("Attention Tracking has begun. Click stop to terminate it.")
       takepicture();
+      stop = false;
       ev.preventDefault();
     }, false);
     clearphoto();

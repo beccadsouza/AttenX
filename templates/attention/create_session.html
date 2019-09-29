@@ -1,15 +1,40 @@
+{% load static from staticfiles  %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Session</title>
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-    <form class="site-form" action="/createsession/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="id_class_id">Class id:</label>
-        <input type="text" name="class_id" maxlength="100" required="" id="id_class_id">
-        <input type="submit" value="Create" id="id_add_hackathon">
-    </form>
+<body style="background-color: rgba(139,128,141,0.9)">
+    <div style="margin-top: 20px">
+        <a href="{% url 'home' %}" class="grey-text text-darken-3 right btn white" style="font-weight:bold;margin-right:40px;margin-top: 15px">
+            <i class="material-icons" style="font-size: 20px;vertical-align:middle !important;">arrow_back_ios</i>
+            Back
+        </a>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col m4" style="margin-top: 180px; margin-left: 500px">
+                <form class="site-form" action="/createsession/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="id_class_id"><h5 class="white-text">ENTER COURSE CODE:</h5></label>
+                    <br>
+                    <input type="text" name="class_id" maxlength="100" value="Ex BDA320" required="" id="id_class_id" class="white-text">
+                    <br><br><br>
+                    <input type="submit" value="Generate QR Code" class="btn" id="id_add_hackathon">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script>
+        M.AutoInit();
+    </script>
 </body>
 </html>
