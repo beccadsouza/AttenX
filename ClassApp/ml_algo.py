@@ -90,6 +90,35 @@ def DetectAttendance(frames, course, course_time):
 
     return HttpResponse("NA")
 
+
+def StartAttendance(frame, course, course_time):
+    face_cascade = cv2.CascadeClassifier('ClassApp/models/haarcascade_frontalface_default.xml')
+    all_roi_faces = []
+    image = frame
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    for i, (x, y, w, h) in enumerate(faces):
+        roi_color = image[y:y + h, x:x + w]
+        all_roi_faces.append(roi_color)
+
+    faces_enc = []
+    for img_name in os.listdir("ClassApp/attendance_students"):
+        known_image = face_recognition.load_image_file("ClassApp/attendance_students/" + img_name)
+        biden_encoding = face_recognition.face_encodings(known_image)[0]
+        faces_enc.append(biden_encoding)
+
+    for face_img in all_roi_faces:
+        cv2.imwrite("ClassApp/attendance_students/unknown.jpg", face_img)
+        unknown_image = face_recognition.load_image_file("ClassApp/attendance_students/unknown.jpg")
+        unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+        results = face_recognition.compare_faces(faces_enc, unknown_encoding)
+        for i, result in enumerate(results):
+            if result:
+                student_name = os.listdir("ClassApp/attendance_students")[i]
+                obj = ClassAttendance(course=str(course), course_time=str(course_time), student_name=student_name)
+                obj.save()
+
+
 def appInsights():
     # Side of class less attentive
     # Jokes - range of attention
