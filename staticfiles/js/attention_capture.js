@@ -85,7 +85,7 @@
 
               $.ajax({
                 type: 'POST',
-                url: '/captureface/',
+                url: '/captureattendance/',
                 data: {
                     'list' : JSON.stringify([arr]),
                     'height':height,

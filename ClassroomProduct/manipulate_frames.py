@@ -28,7 +28,7 @@ def capture_list(request):
         # np_frame = Image.fromarray(np.array(temp2, dtype=np.uint8))
         np_frame = np.array(temp2, dtype=np.uint8)
         np_frames.append(np_frame)
-        Image.fromarray(np.array(temp2, dtype=np.uint8)).save("{0}.png".format(time.time()))
+        Image.fromarray(np.array(temp2, dtype=np.uint8)).save("frames/{0}.png".format(time.time()))
     # print("Sending frames to ML Model", len(np_frames))
     MakeAttention(np_frames)
 
@@ -50,9 +50,9 @@ def capture_attendance(request):
         # np_frame = Image.fromarray(np.array(temp2, dtype=np.uint8))
         np_frame = np.array(temp2, dtype=np.uint8)
         np_frames.append(np_frame)
-        Image.fromarray(np.array(temp2, dtype=np.uint8)).save("Attendance {0}.png".format(time.time()))
+        Image.fromarray(np.array(temp2, dtype=np.uint8)).save("frames/Attendance {0}.png".format(time.time()))
     # MakeAttention(np_frames)
-    StartAttendance(np_frames)
+    StartAttendance(np_frames[0])
 
     return HttpResponse('OK')
 

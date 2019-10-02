@@ -87,9 +87,10 @@
       context.drawImage(video, 0, 0, width, height);
       let data = canvas.toDataURL('image/png');
       let arr = canvas.getContext('2d').getImageData(0, 0, width, height);
+      console.log(arr);
       $.ajax({
           type: 'POST',
-          url: '/captureface/',
+          url: '/captureattendance/',
           data: {
               'list' : JSON.stringify([arr]),
               'height':height,

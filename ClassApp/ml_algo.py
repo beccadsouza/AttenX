@@ -122,9 +122,10 @@ def StartAttendance(frame):
                 student_name = os.listdir("ClassApp/attendance_students")[i]
                 face_names.append(student_name)
 
-    pd.DataFrame(face_names).to_excel('ClassApp/attendance_records/output.xlsx', header=False, index=False)
+    # pd.DataFrame(face_names).to_excel('ClassApp/attendance_records/output.xlsx', header=False, index=False)
     hk = ClassAttentionID.objects.last()
     attn = ClassAttention.objects.filter(hash_key=hk).values_list('ov_attn', flat=True)
+    print(face_names)
     obj = ClassAttendance(median_attn=np.median(np.array(attn)), num_students=str(len(face_names)))
     obj.save()
 

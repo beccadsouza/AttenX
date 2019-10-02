@@ -27,7 +27,7 @@ def create_session(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.session_teacher = request.user
-            instance.hash_key = urllib.parse.quote("{0}_{1}_{2}".format(request.user, request.POST.get('class_id'),timezone.now()))
+            instance.hash_key = urllib.parse.quote("{0}_{1}".format(request.user, request.POST.get('class_id')))
             instance.save()
             return redirect('qrcodegen')
     else:
@@ -47,10 +47,15 @@ def stream_session(request):
 
 def get_list_session(request):
     sessions_list = ClassAttentionID.objects.filter(session_teacher=request.user)
-    return render(request, 'analytics/session_list.html', {'sessions_list':sessions_list})
+    return render(request, 'analytics/session_list.html', {'sessions_list': sessions_list})
 
+def get_attendance(request):
+    return render(request, 'attendance/record_attendance.html')
 
-def get_session_analytics(request, parameter1):
-    hk = parameter1
-    print("function hit")
-    return render(request, 'analytics/session_analytics.html', {"hk": hk})
+# def get_session_analytics(request, parameter1):
+#     hk = parameter1
+#     print("function hit")
+#     return render(request, 'analytics/session_analytics.html', {"hk": hk})
+
+def get_session_analytics(request):
+    return render(request, 'analytics/session_analytics.html')

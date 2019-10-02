@@ -16,7 +16,7 @@ def line_data(request, session_id):
     return data
 
 
-def donut_data(request):
+def chart3(request):
     att_id = ClassAttentionID.objects.filter(session_teacher=request.user)
     course_codes = []
     for course in att_id:
@@ -28,15 +28,15 @@ def donut_data(request):
 
     for course in courses:
         n = 0
-        A = 0
+        A = []
         temp = ClassAttentionID.objects.filter(class_id=course)
         for hk in temp:
             timestmps = ClassAttention.objects.filter(hash_key=hk.hash_key)
             for tp in timestmps:
                 n += 1
-                A += int(tp.ov_attn)
+                A.append(int(tp.ov_attn))
         if n != 0:
-            course_codes[course] = A / n
+            course_codes[course] = np.median(A)
     print(course_codes)
     data = {
         "k": list(course_codes.values()),
@@ -100,6 +100,7 @@ def chart1(request):
             n_p += int(tmstmp.n_p)
             attention.append(int(tmstmp.ov_attn))
 
+        six_sessions_data["timestamp"].append(ClassAttentionID.objects.get(hash_key=hash_key).time_stamp)
         six_sessions_data["questions"].append(n_q)
         six_sessions_data["board"].append(n_b)
         six_sessions_data["problem"].append(n_p)
@@ -108,8 +109,8 @@ def chart1(request):
     return JsonResponse(six_sessions_data)
 
 
-def chart2(request, parameter1):
-    session_timestamps = ClassAttention.objects.get(hash_key=parameter1)
+def chart2(request):
+    session_timestamps = list(ClassAttention.objects.all())[-1]
     session_timestamps_data = defaultdict()
 
     for tmstmp in session_timestamps_data:
@@ -119,7 +120,7 @@ def chart2(request, parameter1):
     return JsonResponse(session_timestamps_data)
 
 
-def chart3(request):
+def chart32(request):
     user_sessions = list(ClassAttentionID.objects.filter(session_teacher=request.user))
     hash_keys = [x.hash_key for x in user_sessions]
 
@@ -133,7 +134,11 @@ def chart3(request):
     for k, v in session_class_data.items():
         final_data[k] = np.median(v)
 
-    return JsonResponse(final_data)
+    data = {
+        "k": list(final_data.keys()),
+        "v": list(final_data.values()),
+    }
+    return JsonResponse(data)
 
 
 def chart4(request):

@@ -15,8 +15,7 @@
     </head>
 <body>
     {% for session in sessions_list %}
-        {{ session.hash_key }}
-        <a href="/sessionanalytics/{{ session.hash_key }}/"><h5>{{ session.class_id }} on {{ session.time_stamp|date }}, {{ session.time_stamp|time }}</h5></a>
+        <a href='/sessionanalytics/{{ session.hash_key }}/'><h5>{{ session.class_id }} on {{ session.time_stamp|date }}, {{ session.time_stamp|time }}</h5></a>
     {% endfor %}
 </body>
 </html>
