@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import datetime
 from ClassApp.pose_detect import getPoseAttention
 from ClassApp.gaze_detect import getGazeAttention
@@ -10,8 +10,10 @@ import cv2
 import face_recognition
 from sklearn.externals import joblib
 import pandas as pd
+import statistics
 import numpy as np
 import random
+from scipy.stats import pearsonr
 
 
 # static attendance
@@ -134,6 +136,50 @@ def appInsights():
     # Side of class less attentive
     # Jokes - range of attention
     return 0
+
+def relation_output(request):
+    attention_ids = ClassAttentionID.objects.filter(session_teacher=request.user)
+    np_data=[]
+    nb_data=[]
+    nq_data=[]
+    attns_data=[]
+
+    for attention_id in attention_ids:
+        query = ClassAttention.objects.filter(hash_key=attention_id.hash_key)
+        sum_np=0
+        sum_nb=0
+        sum_nq=0
+        attns=[]
+        for obj in query:
+            sum_np += obj.n_p
+            sum_nb += obj.n_b
+            sum_nq += obj.n_q
+            attns.append(obj.ov_attn)
+        attns_data.append(statistics.median(attns))
+
+        np_data.append(sum_np)
+        nq_data.append(sum_nq)
+        nb_data.append(sum_nb)
+
+    corr = []
+    corr.append(pearsonr(attns_data, np_data))
+    corr.append(pearsonr(attns_data, nq_data))
+    corr.append(pearsonr(attns_data, nb_data))
+
+
+    attr = ["Problem Solving", "Question & Answer", "Speaking"]
+    val = []
+
+    for i in range(len(corr)):
+        if corr[i] < 0:
+            val.append("Attention is negatively related to " + attr[i] + "by a factor of " + str(corr[i]))
+        elif corr[i] > 0:
+            val.append("Attention is positively related to " + attr[i] + "by a factor of " + str(corr[i]))
+
+    x = {}
+    x["recommendations"] = val
+
+    return JsonResponse(x)
 
 
 
