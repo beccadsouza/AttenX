@@ -25,13 +25,10 @@ class ClassAttentionID(models.Model):
     time_stamp = datetime.datetime.now()
     class_id = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.hash_key
 
 class ClassAttendance(models.Model):
     session_teacher = models.CharField(max_length=100)
     median_attn = models.CharField(max_length=200)
     num_students = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.hash_key
+    

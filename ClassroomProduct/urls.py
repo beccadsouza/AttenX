@@ -1,4 +1,5 @@
 from django.contrib import admin
+admin.autodiscover()
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.urls import include, re_path
