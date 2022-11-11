@@ -8,7 +8,7 @@ from ClassApp.models import *
 import os
 import cv2
 import face_recognition
-from sklearn.externals import joblib
+import joblib
 import pandas as pd
 import statistics
 import numpy as np

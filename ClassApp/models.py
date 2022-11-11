@@ -31,3 +31,4 @@ class ClassAttendance(models.Model):
     median_attn = models.CharField(max_length=200)
     num_students = models.CharField(max_length=200)
 
+    
